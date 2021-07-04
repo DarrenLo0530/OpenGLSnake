@@ -42,39 +42,6 @@ Camera::Camera(float posX, float posY, float posZ, float frontX, float frontY, f
 	updateVectors();
 }
 
-void Camera::processKeyboard(Camera_Movement direction, float deltaTime) { 
-	const float adjustedSpeed = speed * deltaTime;
-	
-	glm::vec3 prevPosition = glm::vec3(position);
-	if (direction == Camera_Movement::FORWARD) {
-		position += glm::normalize(front) * adjustedSpeed;
-	}
-	else if (direction == Camera_Movement::BACKWARD) {
-		position -= glm::normalize(front) * adjustedSpeed;
-	}
-	else if (direction == Camera_Movement::RIGHT) {
-		position += glm::normalize(glm::cross(front, up)) * adjustedSpeed;
-	}
-	else {
-		position -= glm::normalize(glm::cross(front, up)) * adjustedSpeed;
-	}
-
-	position.y = prevPosition.y;
-}
-
-void Camera::processScroll(float yOffset) {
-	fov -= yOffset * zoomSensitivity;
-	fov = glm::clamp(fov, 1.0f, 45.0f);
-}
-void Camera::processMouse(float xOffset, float yOffset) {
-	yaw += xOffset * mouseSensitivity;
-	pitch -= yOffset * mouseSensitivity;
-
-	pitch = glm::clamp(pitch, -89.0f, 89.0f);
-
-	updateVectors();
-}
-
 void Camera::updateVectors() {
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front.y = sin(glm::radians(pitch));

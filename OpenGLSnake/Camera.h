@@ -38,9 +38,6 @@ public:
 		glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f),
 		glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
 	Camera(float posX, float posY, float posZ, float frontX, float frontY, float frontZ, float upX, float upY, float upZ);
-	void processKeyboard(Camera_Movement direction, float deltaTime);
-	void processScroll(float xOffset);
-	void processMouse(float xOffset, float yOffset);
 
 	glm::mat4 getViewMatrix() const;
 private:

@@ -3,7 +3,7 @@
 
 #include "Window.h"
 
-Window::Window(std::string &title, int width, int height) {
+Window::Window(const std::string &title, int width, int height) {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
