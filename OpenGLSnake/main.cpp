@@ -4,11 +4,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <stb_image.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "Shader.h"
 #include "Camera.h"
-#include "stbImage/stb_image.h"
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -64,8 +64,8 @@ int main() {
 		return -1;
 	}
 
-	glViewport(0, 0, screenWidth, screenHeight);
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glViewport(0, 0, screenWidth, screenHeight);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// OpenGL options
@@ -262,37 +262,6 @@ int main() {
 
 	glfwTerminate();
 	return 0;
-}
-
-
-unsigned int genTriangleVAO(float vertices[], size_t size) {
-
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
-
-	// Generate VBO
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-	// Can not use sizeof since C++ array decays to a pointer when passed in as a parameter to a function
-	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-
-
-	// Add VBO to VAO and enable the indice of the VAO
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
-
-	return VAO;
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
