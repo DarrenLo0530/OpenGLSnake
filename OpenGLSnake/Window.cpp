@@ -18,4 +18,9 @@ Window::Window(const std::string &title, int width, int height) {
 	glfwMakeContextCurrent(id);
 }
 
+GLFWwindow* Window::getId() {
+	return id;
+}
+
+
 
