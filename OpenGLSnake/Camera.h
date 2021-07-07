@@ -5,11 +5,6 @@
 #include <glm/gtc/type_ptr.hpp>
 
 const float FOV = 45.0f;
-const float YAW = -90.0f;
-const float PITCH = 0.0f;
-const float SPEED = 2.5f;
-const float MOUSE_SENSITIVITY = 0.1f;
-const float ZOOM_SENSITIVITY = 1.0f;
 
 enum class Camera_Movement {
 	FORWARD,
@@ -28,11 +23,6 @@ public:
 	glm::vec3 right;
 
 	float fov = FOV;
-	float yaw = YAW;
-	float pitch = PITCH;
-	float speed = SPEED;
-	float mouseSensitivity = MOUSE_SENSITIVITY;
-	float zoomSensitivity = ZOOM_SENSITIVITY;
 
 	Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 3.0f),
 		glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f),

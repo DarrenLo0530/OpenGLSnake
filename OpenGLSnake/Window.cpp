@@ -1,4 +1,3 @@
-#include <GLFW/glfw3.h>
 #include <iostream>
 
 #include "Window.h"
@@ -17,6 +16,19 @@ Window::Window(const std::string &title, int width, int height) {
 
 	glfwMakeContextCurrent(id);
 }
+
+int Window::getHeight() const {
+	int height;
+	glfwGetWindowSize(id, NULL, &height);
+	return height;
+}
+
+int Window::getWidth() const {
+	int width;
+	glfwGetWindowSize(id, &width, NULL);
+	return width;
+}
+
 
 GLFWwindow* Window::getId() {
 	return id;

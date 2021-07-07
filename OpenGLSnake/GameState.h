@@ -16,9 +16,6 @@ enum class SnakeMovement {
 	DOWN,
 };
 
-int x = 0;
-
-std::pair<int, int> directionVectors[] = { {-1, 0}, {1, 0}, {0, 1}, {0, -1} };
 
 
 class GameState {
@@ -36,7 +33,6 @@ public:
 	void update(SnakeMovement movement);
 
 	void reset();
-
 private:
 
 	// Head and tail of the snake
@@ -60,4 +56,6 @@ private:
 	int& getSquare(std::pair<unsigned int, unsigned int> position);
 
 	void setFoodLocation();
+
+	static std::pair<int, int> directionVectors[];
 };

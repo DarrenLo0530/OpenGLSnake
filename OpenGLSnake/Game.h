@@ -2,6 +2,9 @@
 #include "GameState.h"
 #include "Window.h"
 #include "Camera.h"
+#include "Shader.h"
+
+#include "Graphics.h"
 
 class Game
 {
@@ -10,15 +13,11 @@ public:
 	void play();
 
 private:
-	Window window;
-	GameState gameState;
-	Camera camera;
+	Window* window;
+	GameState* gameState;
+	Camera* camera;
+	Shader* shaderProgram;
 
-	unsigned int tileVAO;
-	unsigned int foodVAO;
-	unsigned int snakeVAO;
-
-	void gameLoop();
 	void processInput();
 	void draw() const;
 
@@ -26,13 +25,17 @@ private:
 	float prevTime;
 
 	void drawBoard() const;
-	void drawSnake() const;
-	void drawFood() const;
+	void drawEntities() const;
 
-	static unsigned int genTileVAO();
-	static unsigned int genCubeVAO();
+	unsigned int tileVAO;
+	unsigned int cubeVAO;
 
-	static unsigned int genSnakeVAO();
-	static unsigned int genFoodVAO()
+	unsigned int boardTextureBlack;
+	unsigned int boardTextureWhite;
+	unsigned int snakeTexture;
+	unsigned int foodTexture;
+
+
+	static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 };
 

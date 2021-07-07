@@ -1,4 +1,7 @@
-#include "GameState.h";
+#include "GameState.h"
+
+
+std::pair<int, int> GameState::directionVectors[] = { {-1, 0}, {1, 0}, {0, 1}, {0, -1} };
 
 GameState::GameState(unsigned int gameboardSize) {
 	gameboard.resize(gameboardSize, std::vector<int>(gameboardSize, BOARD_EMPTY));
@@ -46,8 +49,9 @@ void GameState::advancePosition(std:: pair<unsigned int, unsigned int> nextPosit
 	
 	if (foodConsumed) {
 		getSquare(nextPosition) = snakeLength + 1;
-		foodConsumed--
+		foodConsumed--;
 	}
+
 	else {
 		nextSquare = snakeLength;
 		// Advance all body pieces forward
@@ -132,7 +136,7 @@ std::vector<std::vector<int>> GameState::getGameboard() const {
 }
 
 unsigned int GameState::getGameboardSize() const {
-	return gameboard.size();
+	return (unsigned int) gameboard.size();
 }
 
 bool GameState::isGameOver() const {

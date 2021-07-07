@@ -1,6 +1,13 @@
 #include "Shader.h"
 
-Shader::Shader(const char* vShaderPath, const char* fShaderPath){
+#include <glad/glad.h>
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
+Shader::Shader(const char* vShaderPath, const char* fShaderPath) {
 	std::string vShaderStr;
 	std::string fShaderStr;
 	std::ifstream vShaderFile;

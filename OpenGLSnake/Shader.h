@@ -1,17 +1,12 @@
 #pragma once
-#include <glad/glad.h>
-
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 
 class Shader {
 public: 
 	unsigned int ID;
 		
 	// Constructor
-	Shader(const char* vShaderPath, const char* fShaderPath);
+	Shader(const char* vShaderPath="", const char* fShaderPath="");
 
 	void use();
 
