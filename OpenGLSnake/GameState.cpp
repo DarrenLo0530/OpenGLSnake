@@ -9,8 +9,10 @@ GameState::GameState(unsigned int gameboardSize) {
 }
 
 void GameState::setCurrentDirection(SnakeMovement direction) {
-	// Check if
-	currentDirection = direction;
+	// Make it so that the snake can not go back in the opposite direction its head came from
+	if (getSquare(head) == BOARD_TAIL || getSquare(getNextPosition(head, direction)) != getSquare(head) - 1) {
+		currentDirection = direction;
+	}
 }
 
 void GameState::update() {
