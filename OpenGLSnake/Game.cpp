@@ -163,14 +163,10 @@ void Game::play() {
 			prevTime = (float)glfwGetTime();
 		}
 
-
 		glfwPollEvents();
-
 	}
-
 	glfwTerminate();
 }
-
 
 void Game::processInput() {
 	GLFWwindow* id = window->getId();

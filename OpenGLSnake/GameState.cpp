@@ -1,5 +1,4 @@
 #include "GameState.h"
-#include <iostream>
 
 std::pair<int, int> GameState::directionVectors[] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
@@ -8,12 +7,6 @@ GameState::GameState(unsigned int gameboardSize) {
 	reset();
 }
 
-void GameState::setCurrentDirection(SnakeMovement direction) {
-	// Make it so that the snake can not go back in the opposite direction its head came from
-	if (getSquare(head) == BOARD_TAIL || getSquare(getNextPosition(head, direction)) != getSquare(head) - 1) {
-		currentDirection = direction;
-	}
-}
 
 void GameState::update() {
 	const unsigned int gameboardSize = getGameboardSize();
@@ -32,6 +25,14 @@ void GameState::update() {
 	nextPosition = { (headX + gameboardSize + directionX) % gameboardSize,
 			(headY + gameboardSize + directionY) % gameboardSize };
 	advancePosition(nextPosition);
+}
+
+
+void GameState::setCurrentDirection(SnakeMovement direction) {
+	// Make it so that the snake can not go back in the opposite direction its head came from
+	if (getSquare(head) == BOARD_TAIL || getSquare(getNextPosition(head, direction)) != getSquare(head) - 1) {
+		currentDirection = direction;
+	}
 }
 
 int& GameState::getSquare(std::pair<unsigned int, unsigned int> position) {
