@@ -35,6 +35,7 @@ public:
 
 	void reset();
 private:
+	static std::pair<int, int> directionVectors[];
 
 	// Head and tail of the snake
 	std::pair<unsigned int, unsigned int> head;
@@ -42,8 +43,6 @@ private:
 	// Stores the gamestate
 	std::vector<std::vector<int>> gameboard;
 
-	// Total number of points
-	unsigned int score;
 
 	std::vector<std::pair<unsigned int, unsigned int>> emptySquares;
 
@@ -54,11 +53,12 @@ private:
 
 	SnakeMovement currentDirection;
 
+	std::pair<unsigned int, unsigned int> getNextPosition(std::pair<int, int> currPosition, SnakeMovement direction);
+
 	void advancePosition(std::pair<unsigned int, unsigned int> position);
 
 	int& getSquare(std::pair<unsigned int, unsigned int> position);
 
 	void setFoodLocation();
 
-	static std::pair<int, int> directionVectors[];
 };

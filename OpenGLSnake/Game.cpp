@@ -160,7 +160,6 @@ void Game::play() {
 		if (gameState->isGameOver()) {
 			gameState->reset();
 			deltaTime = 0.0f;
-			std::cout << "BYE";
 			prevTime = (float)glfwGetTime();
 		}
 

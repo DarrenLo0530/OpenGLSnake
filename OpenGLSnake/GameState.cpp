@@ -9,6 +9,7 @@ GameState::GameState(unsigned int gameboardSize) {
 }
 
 void GameState::setCurrentDirection(SnakeMovement direction) {
+	// Check if
 	currentDirection = direction;
 }
 
@@ -35,9 +36,18 @@ int& GameState::getSquare(std::pair<unsigned int, unsigned int> position) {
 	return gameboard.at(position.second).at(position.first);
 }
 
+std::pair<unsigned int, unsigned int> GameState::getNextPosition(std::pair<int, int> currPosition, SnakeMovement direction) {
+	unsigned int gameboardSize = getGameboardSize();
+	std::pair<int, int> directionVector = directionVectors[(int)direction];
+	return { 
+		(currPosition.first + gameboardSize + directionVector.first) % gameboardSize,
+		(currPosition.second + gameboardSize + directionVector.second) % gameboardSize 
+	};
+}
+
 
 void GameState::advancePosition(std:: pair<unsigned int, unsigned int> nextPosition) {
-	int& nextSquare = getSquare(nextPosition);
+	int nextSquare = getSquare(nextPosition);
 
 	// Check if snake collides with itself
 	if (nextSquare >= BOARD_TAIL) {
@@ -45,8 +55,8 @@ void GameState::advancePosition(std:: pair<unsigned int, unsigned int> nextPosit
 		return;
 	}
 
-	unsigned int& headX = head.first;
-	unsigned int& headY = head.second;
+	unsigned int headX = head.first;
+	unsigned int headY = head.second;
 	unsigned int snakeLength = getSquare(head);
 
 	
@@ -55,45 +65,40 @@ void GameState::advancePosition(std:: pair<unsigned int, unsigned int> nextPosit
 		foodConsumed--;
 	}
 	else {
-		nextSquare = snakeLength;
+		getSquare(nextPosition) = snakeLength;
 		
 		// Advance all body pieces forward
 		
-		unsigned int currX = headX;
-		unsigned int currY = headY;
+		std::pair<unsigned int, unsigned int> currPosition = head;
 
 		const unsigned int gameboardSize = getGameboardSize();
 
-		// Advance snakes body
-		while (getSquare({ currX, currY }) != BOARD_TAIL) {
-			for (int i = 0; i < 4; i++) {
-				std::pair<int, int> directionVector = directionVectors[i];
-				std::pair<unsigned int, unsigned int> nextBody = { (currX + gameboardSize + directionVector.first) % gameboardSize,
-					(headY + gameboardSize + directionVector.second) % gameboardSize };
-				if (getSquare(nextBody) == getSquare({ currX, currY }) - 1) {
-					getSquare({ currX, currY })--;
 
-					currX = nextBody.first;
-					currY = nextBody.second;
+		// Advance snakes body
+		while (getSquare(currPosition) != BOARD_TAIL) {
+			for (int i = 0; i < 4; i++) {
+				std::pair<unsigned int, unsigned int> nextBody = getNextPosition(currPosition, (SnakeMovement)i);
+				if (getSquare(nextBody) == getSquare(currPosition) - 1) {
+					getSquare(currPosition)--;
+
+					currPosition = nextBody;
 				}
 			}
 		}
 
 		// Add back tail to empty squares
-		getSquare({ currX, currY }) = BOARD_EMPTY;
-		emptySquares.push_back({ currX, currY });
+		getSquare(currPosition) = BOARD_EMPTY;
+		emptySquares.push_back(currPosition);
 	}
 
 	// Remove advanced to position from empty squares
 	emptySquares.erase(std::remove(emptySquares.begin(), emptySquares.end(), nextPosition), emptySquares.end());
-
 	// Reassign head of snake
 	head = nextPosition;
 
 	// Add to food consumed if the square just moved onto was a food square
 	if (nextSquare == BOARD_FOOD) {
 		foodConsumed++;
-
 		setFoodLocation();
 	}
 
@@ -109,31 +114,28 @@ void GameState::setFoodLocation() {
 
 void GameState::reset() {
 	// Reset stats
-	score = 0;
 	foodConsumed = 0;
 	gameOver = false;
 
 	// Reset game board
 	const unsigned int gameboardSize = getGameboardSize();
+	gameboard.clear();
 	gameboard.resize(gameboardSize, std::vector<int>(gameboardSize, BOARD_EMPTY));
 	head = { gameboardSize / 2, gameboardSize / 2 };
 	getSquare(head) = BOARD_TAIL;
-	
 
-	// Reset empty cells
+	// Reset empty cells and exclude head
 	emptySquares.clear();
 	for (unsigned int i = 0; i < gameboardSize; i++) {
 		for (unsigned int j = 0; j < gameboardSize; j++) {
 			emptySquares.push_back({ i, j });
 		}
 	}
+	emptySquares.erase(std::remove(emptySquares.begin(), emptySquares.end(), head), emptySquares.end());
+
+	setFoodLocation();
 
 	currentDirection = SnakeMovement::LEFT;
-}
-
-// Getters
-unsigned int GameState::getScore() const {
-	return score;
 }
 
 std::vector<std::vector<int>> GameState::getGameboard() const {
