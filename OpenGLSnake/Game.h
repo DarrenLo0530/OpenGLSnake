@@ -19,13 +19,13 @@ private:
 	Shader* shaderProgram;
 
 	void processInput();
-	void draw() const;
+	void draw();
 
 	float deltaTime;
 	float prevTime;
 
-	void drawBoard() const;
-	void drawEntities() const;
+	void drawBoard();
+	void drawEntities();
 
 	unsigned int tileVAO;
 	unsigned int cubeVAO;

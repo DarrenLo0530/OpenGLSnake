@@ -16,8 +16,6 @@ enum class SnakeMovement {
 	DOWN,
 };
 
-
-
 class GameState {
 
 public:
@@ -29,8 +27,11 @@ public:
 	unsigned int getGameboardSize() const;
 	bool isGameOver() const;
 
+	// Setters
+	void setCurrentDirection(SnakeMovement direction);
+
 	// Other methods
-	void update(SnakeMovement movement);
+	void update();
 
 	void reset();
 private:
@@ -50,6 +51,8 @@ private:
 	int foodConsumed;
 
 	bool gameOver;
+
+	SnakeMovement currentDirection;
 
 	void advancePosition(std::pair<unsigned int, unsigned int> position);
 

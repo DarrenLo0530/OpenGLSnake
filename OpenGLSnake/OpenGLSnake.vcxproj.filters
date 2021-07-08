@@ -72,13 +72,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="container.jpg">
-      <Filter>Resource Files\Textures</Filter>
-    </Image>
     <Image Include="white-tile.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
     <Image Include="black-tile.png">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
+    <Image Include="snake.png">
       <Filter>Resource Files\Textures</Filter>
     </Image>
   </ItemGroup>

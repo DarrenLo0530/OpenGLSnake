@@ -47,7 +47,37 @@ unsigned int genTileVAO() {
 	return genVAO(tileVertices, sizeof(tileVertices), tileIndices, sizeof(tileIndices));
 }
 
-unsigned int genCubeVAO();
+unsigned int genCubeVAO() {
+	const float cubeVertices[]{
+		// Front
+		-0.5f, -0.5f, 0.5f, 0.25f, 0.0f,  // Bottom left 0
+		 0.5f, -0.5f, 0.5f, 0.5f, 0.0f,  // Bottom right 1
+		 0.5f, 0.5f, 0.5f, 0.5f, 1.0f, // Top right 2
+		-0.5f, 0.5f, 0.5f, 0.25f, 1.0f, // Top left 3
+
+		// Back
+		-0.5f, -0.5f, -0.5f, 0.75f, 0.0f,  // Bottom left 4
+		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,  // Bottom right 5
+		 0.5f, 0.5f, -0.5f, 1.0f, 1.0f, // Top right 6
+		-0.5f, 0.5f, -0.5f, 0.75f, 0.0f, // Top left 7
+	};
+
+	const unsigned int cubeIndices[]{
+		// Front
+		0, 1, 2, 0, 2, 3,
+		// Top
+		3, 2, 7, 2, 6, 7, 
+		//Bottom
+		0, 1, 4, 4, 5, 1,
+		// Right
+		2, 6, 5, 5, 1, 2,
+		// Left
+		7, 3, 0, 0, 4, 7,
+		// Back
+		4, 5, 6, 4, 6, 7,
+	};
+	return genVAO(cubeVertices, sizeof(cubeVertices), cubeIndices, sizeof(cubeIndices));
+}
 
 unsigned int loadTexture(const std::string& textureFile, GLenum format) {
 	unsigned int texture;

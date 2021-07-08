@@ -1,30 +1,33 @@
 #include "GameState.h"
+#include <iostream>
 
-
-std::pair<int, int> GameState::directionVectors[] = { {-1, 0}, {1, 0}, {0, 1}, {0, -1} };
+std::pair<int, int> GameState::directionVectors[] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 
 GameState::GameState(unsigned int gameboardSize) {
 	gameboard.resize(gameboardSize, std::vector<int>(gameboardSize, BOARD_EMPTY));
-
 	reset();
 }
 
+void GameState::setCurrentDirection(SnakeMovement direction) {
+	currentDirection = direction;
+}
 
-void GameState::update(SnakeMovement movement) {
+void GameState::update() {
 	const unsigned int gameboardSize = getGameboardSize();
 	std::pair<unsigned int, unsigned int> nextPosition;
 
-	const unsigned int& headX = head.first;
-	const unsigned int& headY = head.second;
+	const unsigned int headX = head.first;
+	const unsigned int headY = head.second;
 
-	std::pair<int, int>& directionVector = directionVectors[(int) movement];
-	
-	const int& directionX = directionVector.first;
-	const int& directionY = directionVector.second;
+
+	std::pair<int, int> directionVector = directionVectors[(int) currentDirection];
+	const int directionX = directionVector.first;
+	const int directionY = directionVector.second;
+
+
 
 	nextPosition = { (headX + gameboardSize + directionX) % gameboardSize,
 			(headY + gameboardSize + directionY) % gameboardSize };
-
 	advancePosition(nextPosition);
 }
 
@@ -34,7 +37,7 @@ int& GameState::getSquare(std::pair<unsigned int, unsigned int> position) {
 
 
 void GameState::advancePosition(std:: pair<unsigned int, unsigned int> nextPosition) {
-	int nextSquare = getSquare(nextPosition);
+	int& nextSquare = getSquare(nextPosition);
 
 	// Check if snake collides with itself
 	if (nextSquare >= BOARD_TAIL) {
@@ -51,9 +54,9 @@ void GameState::advancePosition(std:: pair<unsigned int, unsigned int> nextPosit
 		getSquare(nextPosition) = snakeLength + 1;
 		foodConsumed--;
 	}
-
 	else {
 		nextSquare = snakeLength;
+		
 		// Advance all body pieces forward
 		
 		unsigned int currX = headX;
@@ -124,6 +127,8 @@ void GameState::reset() {
 			emptySquares.push_back({ i, j });
 		}
 	}
+
+	currentDirection = SnakeMovement::LEFT;
 }
 
 // Getters

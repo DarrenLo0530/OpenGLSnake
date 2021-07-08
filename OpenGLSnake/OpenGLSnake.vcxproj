@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="black-tile.png" />
-    <Image Include="container.jpg" />
+    <Image Include="snake.png" />
     <Image Include="white-tile.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
